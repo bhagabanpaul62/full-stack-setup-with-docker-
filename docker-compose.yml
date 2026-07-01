@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: agent
+      POSTGRES_USER: agent1
+      POSTGRES_PASSWORD: agent990genet0909
+ 
+
+  #service 2
+  backend:
+    build: ./app_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    env_file:
+      - ./app_backend/.env
+
+  #service 3
+  frontend:
+    build: ./app_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    env_file:
+      - ./app_frontend/.env
